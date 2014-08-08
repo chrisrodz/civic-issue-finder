@@ -7,12 +7,14 @@ import json, markdown
 from requests import get
 from requests.exceptions import ConnectionError
 
+import os
+
 # -------------------
 # Init
 # -------------------
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '\xbd[;\xfeZs$\x94\x13J\x8fq\xe8\xbd\x9e\xc0\xe1\xa9"\xbe-\xb0\x80\xaa'
+app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET')
 
 # -------------------
 # Routes
@@ -84,7 +86,7 @@ def find():
     return render_template('widget.html', error=True)
 
   # Parse the API response
-  issues = json.loads(issues.content)  
+  issues = json.loads(issues.content)
 
   # Format each issue
   for iss in issues['objects']:
